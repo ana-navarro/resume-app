@@ -1,75 +1,42 @@
-# React + TypeScript + Vite
+# resume-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Papel no ecossistema (PT)
 
-Currently, two official plugins are available:
+Frontend do Currículo Interativo. Conforme a Constitution Principle I
+(`.specify/memory/constitution.md`), é o "frontend anêmico" do ecossistema — foca em UI, diagramação e
+chat, sem regras de negócio próprias; toda a lógica vive nos serviços de backend, acessados via
+`resume-bff`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Componentes MUST usar `PascalCase` e a arquitetura do frontend MUST sempre priorizar componentização e
+reutilização (Constitution Principle II).
 
-## React Compiler
+## Status atual
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Scaffold inicial gerado pelo Vite (template React + TypeScript) — ainda sem componentes, chamadas de API
+ou telas específicas do Currículo Interativo implementadas.
 
-## Expanding the ESLint configuration
+## Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19 + TypeScript
+- Vite (build/dev server)
+- ESLint
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Como rodar localmente
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```sh
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Outros scripts disponíveis (`package.json`):
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `npm run build` — build de produção (`tsc -b && vite build`)
+- `npm run lint` — roda o ESLint
+- `npm run preview` — serve o build de produção localmente
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Role in the ecosystem (EN)
 
-```
+The Interactive Resume's frontend. Per Constitution Principle I, this is the ecosystem's "anemic
+frontend" — focused on UI, diagramming, and chat, with no business logic of its own; all logic lives in
+the backend services, reached through `resume-bff`. Currently just the initial Vite (React + TypeScript)
+scaffold — no project-specific components, API calls, or screens have been built yet.
