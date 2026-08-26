@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      # NOTE: no unit/component test step or coverage gate yet -- package.json has no "test"
+      # script (Constitution Principle III calls for Jest + Cypress here, not implemented yet).
+      # Add it to this job once real tests exist; no change to auto-update.sh will be needed.
+
+  # Only advances after lint-and-build passes, and only on a real merge to main -- never on a PR.
+  # auto-update.sh in resume-server tracks this branch (not main) for this repo.
+  promote:
+    needs: lint-and-build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: git push origin HEAD:refs/heads/deployed --force
